@@ -22,7 +22,7 @@ router.put('/:id', async (req, res) => {
   } else {
     return res.status(403).json("You can update only your account!");
   }
-})
+});
 
 // delete user
 router.delete('/:id', async (req, res) => {
@@ -36,7 +36,7 @@ router.delete('/:id', async (req, res) => {
   } else {
     return res.status(403).json("You can't delete your account!");
   }
-})
+});
 
 // get a user
 router.get('/:id', async (req, res) => {
@@ -47,7 +47,8 @@ router.get('/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-})
+});
+
 // follow a user
 router.put('/:id/follow', async (req, res) => {
   if (req.body.userId !== req.params.id) {
@@ -69,6 +70,7 @@ router.put('/:id/follow', async (req, res) => {
     res.status(403).json("You can't follow yourself")
   }
 });
+
 // unfollow a user
 router.put('/:id/unfollow', async (req, res) => {
   if (req.body.userId !== req.params.id) {
@@ -89,5 +91,6 @@ router.put('/:id/unfollow', async (req, res) => {
   } else {
     res.status(403).json("You can't unfollow yourself")
   }
-})
+});
+
 module.exports = router;
