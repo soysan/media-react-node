@@ -17,10 +17,25 @@ export default function Share() {
       userId: user._id,
       desc: desc.current.value,
     };
+    if (file) {
+      const data = new FormData();
+      const fileName = Date.now() + file.name;
+      data.append("name", fileName);
+      data.append("file", file);
+      newPost.img = fileName;
+      console.log(newPost)
+      console.log(data.get("name"))
+      try {
+        await axios.post("/upload", data);
+      } catch (err) {
+        console.log(err)
+      }
+    }
     try {
-      await axios.post('/post', newPost)
+      await axios.post('/post', newPost);
+      window.location.reload();
     } catch (err) {
-
+      console.log(err)
     }
   }
 
@@ -28,7 +43,15 @@ export default function Share() {
     <div className="share">
       <div className="shareWrapper">
         <div className="shareTop">
-          <img src={user.profilePicture ? PF + user.profilePicture : PF + "people/noAvatar.png"} alt="" className="shareProfile" />
+          <img
+            src={
+              user.profilePicture
+                ? PF + user.profilePicture
+                : PF + "people/noAvatar.png"
+            }
+            alt=""
+            className="shareProfile"
+          />
           <input
             placeholder={"What's in your mind " + user.username + "?"}
             className="shareInput"

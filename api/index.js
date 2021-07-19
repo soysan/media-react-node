@@ -30,18 +30,18 @@ const storage = multer.diskStorage({
     cb(null, "public/images");
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname);
+    cb(null, req.body.name);
   },
 });
 
-const upload = multer({storage});
+const upload = multer({ storage: storage });
 app.post("/api/upload", upload.single("file"), (req, res) => {
   try {
     return res.status(200).json("File uploaded successfully")
   } catch (err) {
     console.log(err);
   }
-})
+});
 
 app.use('/api/auth', authRoute);
 app.use('/api/users', userRoute);
@@ -49,4 +49,4 @@ app.use('/api/post', postRoute);
 
 app.listen(8800, () => {
   console.log('Backend server started')
-})
+});
